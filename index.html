@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partho K. Paul | Synthetic & Electrochemist</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         NAVIGATION BAR 
+         ========================================== -->
+    <nav class="navbar" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; background-color: rgb(255, 255, 255);">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo"><img src="logo.png" alt="PKP Logo"></a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#research" class="nav-link">Research</a></li>
+                <li><a href="#skills" class="nav-link">Expertise</a></li>
+                <li><a href="#publications" class="nav-link">Publications</a></li>
+                <li><a href="Partho_Paul_CV.pdf" download="" class="nav-btn"><i class="fa-solid fa-file-pdf"></i> Resume</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         HERO SECTION (WHAT VISITORS SEE FIRST)
+         Edit your main headline and intro text here
+         ========================================== -->
+    <header id="home" class="hero">
+        <video class="hero-video" autoplay="" muted="" loop="" playsinline="">
+            <source src="bg-video.mp4" type="video/mp4">
+            <source src="bg-video.mov" type="video/quicktime">
+        </video>
+        <div class="hero-content">
+            <div class="hero-text-container">
+                <div class="ecs-badge">
+                    <i class="fa-solid fa-location-dot"></i> Presenting at 249th ECS Meeting | Seattle
+                </div>
+                
+                <!-- YOUR NAME AND TITLE -->
+                <h1 class="hero-title">Partho K. Paul</h1>
+                <h2 class="hero-subtitle">Synthetic &amp; Electrochemist</h2>
+                
+                <!-- YOUR AFFILIATIONS -->
+                <p class="hero-affiliation">
+                    <i class="fa-solid fa-building-columns"></i> Ph.D. Candidate at UC Irvine<br>
+                    <i class="fa-solid fa-flask-vial" style="margin-top: 8px;"></i> DOE SCGSR Fellow at Brookhaven National Lab
+                </p>
+                
+                <!-- YOUR HOOK / ELEVATOR PITCH -->
+                <p class="hero-description">
+                    Advancing scalable CO₂ capture technologies by understanding the fundemental mechanism at play in the molecular level for both aquous and organic system.&nbsp;</p>
+                
+                <div class="availability-badge" style="margin-bottom: 30px; font-weight: 600; color: var(--uci-gold);">
+                    <i class="fa-solid fa-graduation-cap"></i> Expected Ph.D. Summer 2026 – Available for Full-Time R&amp;D Roles
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#research" class="btn btn-primary">View Research</a>
+                    <a href="Partho_Paul_CV.pdf" download="" class="btn btn-secondary">Download Full CV</a>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <div class="image-wrapper">
+                    <!-- TO CHANGE YOUR PICTURE, REPLACE 'profile.png' IN THIS FOLDER -->
+                    <img src="profile.png" alt="Partho Kumar Paul" class="profile-img">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         RESEARCH SECTION (DRAG & SELECT TOPICS)
+         ========================================== -->
+    <section id="research" class="section research-section">
+        <div class="section-container">
+            <h2 class="section-title">Research Focus</h2>
+            <div class="title-underline"></div>
+            
+            <p class="section-intro">
+                My research bridges the gap between molecular design via organic synthesis and characterization using electrochemistry and spectroscopy. Select a topic below to read the summary.
+            </p>
+
+            <div class="research-interactive">
+                
+                <!-- DRAGGABLE MENU TITLES -->
+                <div class="drag-container" id="dragContainer" style="cursor: grab;">
+                    <ul class="research-tabs" id="researchTabs">
+                        <!-- Make sure the data-target matches the id of the pane below -->
+                        <li class="tab-item" data-target="topic-co2">Hydroxymethylated Quinones</li>
+                        <li class="tab-item" data-target="topic-radiolysis">Alloxazine PCET Mediators</li>
+                        <li class="tab-item active" data-target="topic-crossover">Advanced Catalysis</li>
+                        <li class="tab-item" data-target="topic-automation">Data Automation</li>
+                    </ul>
+                </div>
+                
+                <div class="drag-hint">
+                    <i class="fa-solid fa-arrows-left-right"></i> Drag or swipe to explore topics
+                </div>
+
+                <!-- CONTENT FOR EACH RESEARCH TOPIC -->
+                <div class="research-content-area">
+                    
+                    <!-- TOPIC 1 -->
+                    <div class="research-pane" id="topic-co2">
+                        <div class="pane-header">
+                            <i class="fa-solid fa-leaf pane-icon"></i>
+                            <h3>Hydroxymethylated Quinones for CO₂ Capture</h3>
+                        </div>
+                        <p class="pane-text">
+                            Electrochemical CO₂ capture using quinones is a promising alternative to energy-intensive amine scrubbing. However, the negative redox potentials needed to generate strongly nucleophilic dianions also increase oxygen sensitivity. My research tries to solve this problem by introducing a covalently linked H-bonding arm connected through a flexible benzylic C–C bond to the quinone scaffold. Upon two-electron reduction, this arm rotates to position the hydroxymethyl group to stabilize the dianion via H-bonding, circumventing the fundamental linear trade-off that has constrained quinone-based capture systems.
+                        </p>
+                        
+                        <img src="figure1.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'300\'><rect width=\'800\' height=\'300\' fill=\'%23f1f5f9\' rx=\'8\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' fill=\'%2364748b\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Save your quinone picture in the folder as: figure1.png</text></svg>'" style="max-width: 100%; border-radius: 8px; margin: 30px auto; display: block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        
+                        <ul class="pane-highlights">
+                            <li><i class="fa-solid fa-check"></i> Synthesized and characterized 6+ hydroxymethylated quinone (HMQ) derivatives</li>
+                            <li><i class="fa-solid fa-check"></i> Spectroscopic/electrochemical confirmation of aryl-carbonate adducts.</li>
+                            <li><i class="fa-solid fa-check"></i> Independent control over reduction potential and binding affinity.</li>
+                        </ul>
+                    </div>
+
+                    <!-- TOPIC 2 -->
+                    <div class="research-pane" id="topic-radiolysis">
+                        <div class="pane-header">
+                            <i class="fa-solid fa-atom pane-icon"></i>
+                            <h3>Alloxazine Derivatives as Tunable PCET Mediators</h3>
+                        </div>
+                        <p class="pane-text">
+                            Nature has spent billions of years perfecting the proton-coupled electron transfer (PCET) chemistry of flavins: a biological cofactors that drive essential redox processes across all living systems. My research asks: can we harness this biologically optimized 2e⁻/2H⁺ reactivity for CO₂ capture? The challenge is that natural flavins are poorly soluble in water, limiting their practical use. I addressed this by synthesizing novel alloxazine derivatives&nbsp; bearing distal charged groups that dramatically enhance aqueous solubility while preserving the redox active core. Importantly, these distal groups leads to stability difference as demonstrated by spectroelectrochemical and pulse radiolysis studies.</p>
+                        
+                        <img src="figure2.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'300\'><rect width=\'800\' height=\'300\' fill=\'%23f1f5f9\' rx=\'8\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' fill=\'%2364748b\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Save your alloxazine picture in the folder as: figure2.png</text></svg>'" style="max-width: 100%; border-radius: 8px; margin: 30px auto; display: block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                        <ul class="pane-highlights">
+                            <li><i class="fa-solid fa-check"></i> Demonstrated reversible 2e⁻/2H⁺ PCET redox chemistry.</li>
+                            <li><i class="fa-solid fa-check"></i> Conducting pulse radiolysis experiments to observe transient radicals.</li>
+                            <li><i class="fa-solid fa-check"></i> Integrating into flow cell architectures for continuous cycling.</li>
+                        </ul>
+                    </div>
+
+                    <!-- TOPIC 3 -->
+                    <div class="research-pane active" id="topic-crossover">
+                        <div class="pane-header">
+                            <i class="fa-solid fa-flask pane-icon"></i>
+                            <h3>Advanced Synthetic Methodology &amp; Catalysis</h3>
+                        </div>
+                        <p class="pane-text">Early in my graduate&nbsp; research experience, I had the opportunity to take part in rigorous, multi-step organic synthesis and complex catalysis. During my tenure in the Pronin Lab (UCI), I investigated cobalt-catalyzed radical–polar crossover reactions, successfully executing intricate, air-sensitive synthetic campaigns. By employing sophisticated isotopic labeling (¹⁸O) and multi-technique characterization (NMR, IR, mass spectrometry), I was able to elucidate some key step of cobalt-salen catalyzed hydrofunctionalization and ring opening reaction.&nbsp;</p>
+                        
+                        <img src="figure3.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'300\'><rect width=\'800\' height=\'300\' fill=\'%23f1f5f9\' rx=\'8\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' fill=\'%2364748b\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Save your catalysis picture in the folder as: figure3.png</text></svg>'" style="max-width: 100%; border-radius: 8px; margin: 30px auto; display: block; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                        <ul class="pane-highlights">
+                            <li><i class="fa-solid fa-check"></i> Executed multi-step air-sensitive synthetic campaigns.</li>
+                            <li><i class="fa-solid fa-check"></i> Performed sophisticated ¹⁸O isotopic labeling studies.</li>
+                        </ul>
+                    </div>
+
+                    <!-- TOPIC 4 -->
+                    <div class="research-pane" id="topic-automation">
+                        <div class="pane-header">
+                            <i class="fa-solid fa-code pane-icon"></i>
+                            <h3>Computational Data Automation</h3>
+                        </div>
+                        <p class="pane-text">
+                            Modern physical and organic chemistry generates massive datasets that require sophisticated analysis. To accelerate our research pipeline, I built custom Python-based tools to automate the processing of complex spectroscopic and electrochemical data, significantly reducing analysis time and minimizing human error while mentoring undergraduate researchers in computational techniques.
+                        </p>
+
+                        <!-- TO ADD A FIGURE, ADD YOUR IMG TAG HERE -->
+
+                        <ul class="pane-highlights">
+                            <li><i class="fa-solid fa-check"></i> Built custom Python automation pipelines.</li>
+                            <li><i class="fa-solid fa-check"></i> Processed large CV, UV-Vis, and bulk electrolysis datasets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ==========================================
+         TECHNICAL & ELECTROCHEMICAL EXPERTISE
+         ========================================== -->
+    <section id="skills" class="section" style="background-color: var(--bg-light);">
+        <div class="section-container">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="title-underline"></div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;">
+                <div class="pub-card" style="padding: 25px; flex-direction: column;">
+                    <h3 style="color: var(--uci-gold); margin-bottom: 15px;"><i class="fa-solid fa-bolt"></i> Electrochemical &amp; Experimental</h3>
+                    <ul style="list-style-type: none;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Cyclic Voltammetry &amp; Bulk Electrolysis</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Spectroelectrochemistry</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Pulse Radiolysis &amp; Transient Absorption</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> NMR, UV-Vis, IR/FTIR, GC/LC/ESI-MS</li>
+                    </ul>
+                </div>
+                
+                <div class="pub-card" style="padding: 25px; flex-direction: column;">
+                    <h3 style="color: var(--uci-gold); margin-bottom: 15px;"><i class="fa-solid fa-laptop-code"></i> Computational &amp; Data</h3>
+                    <ul style="list-style-type: none;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> TDDFT (Fugaku Supercomputer) &amp; DFT</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Python (NumPy, SciPy, pandas, Matplotlib)</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> TensorFlow / PyTorch for ML modeling</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> HPC Workflows &amp; Data Pipeline Automation</li>
+                    </ul>
+                </div>
+
+                <div class="pub-card" style="padding: 25px; flex-direction: column;">
+                    <h3 style="color: var(--uci-gold); margin-bottom: 15px;"><i class="fa-solid fa-flask"></i> Synthesis &amp; Catalysis</h3>
+                    <ul style="list-style-type: none;">
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Multi-step Organic Synthesis</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Air-Sensitive Techniques (Schlenk/Glovebox)</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> Transition-Metal Catalysis</li>
+                        <li style="margin-bottom: 10px;"><i class="fa-solid fa-check" style="color: var(--text-muted); margin-right: 10px;"></i> ¹⁸O Isotopic Labeling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PUBLICATIONS & AWARDS SECTION
+         ========================================== -->
+    <section id="publications" class="section research-section" style="background-color: var(--bg-dark);">
+        <div class="section-container">
+            <h2 class="section-title">Publications &amp; Awards</h2>
+            <div class="title-underline"></div>
+            
+            <div class="publications-list">
+                <!-- PUBLICATION 1 -->
+                <div class="pub-card">
+                    <div class="pub-year">In Prep</div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Design, Synthesis, and Studies of Hydroxymethylated Quinone Derivatives for Electrochemical CO₂ Capture</h3>
+                        <p class="pub-authors"><strong>Paul, P. K.</strong>; Lin, C. C.; Yang, J. Y.</p>
+                        <span class="pub-journal">Manuscript in preparation</span>
+                    </div>
+                </div>
+
+                <!-- PUBLICATION 2 -->
+                <div class="pub-card">
+                    <div class="pub-year">In Prep</div>
+                    <div class="pub-content">
+                        <h3 class="pub-title">Synthesis and Evaluation of Charged Flavin Derivatives for pH-Swing Mediated CO₂ Capture</h3>
+                        <p class="pub-authors"><strong>Paul, P. K.</strong>; Yang, J. Y.</p>
+                        <span class="pub-journal">Manuscript in preparation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="awards-container" style="margin-top: 50px;">
+                <h3 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">Fellowships &amp; Awards</h3>
+                <ul class="awards-list" style="list-style: none; max-width: 800px; margin: 0 auto; background-color: var(--bg-card); border-radius: 15px; padding: 20px; border: 1px solid var(--border-color);">
+                    <li style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px;"><i class="fa-solid fa-award" style="color: var(--uci-gold); font-size: 1.2rem;"></i> DOE SCGSR International Research Collaboration Award (IRCA) — RIKEN &amp; Brookhaven National Lab (2026)</li>
+                    <li style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px;"><i class="fa-solid fa-award" style="color: var(--uci-gold); font-size: 1.2rem;"></i> DOE SCGSR Fellowship — Brookhaven National Laboratory (2026)</li>
+                    <li style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px;"><i class="fa-solid fa-award" style="color: var(--uci-gold); font-size: 1.2rem;"></i> Eugene Cota-Robles Fellowship — UC Irvine (1st &amp; 4th Year)</li>
+                    <li style="padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px;"><i class="fa-solid fa-award" style="color: var(--uci-gold); font-size: 1.2rem;"></i> Dissertation Year Fellowship — UC Irvine (Summer 2025)</li>
+                    <li style="padding: 15px; display: flex; align-items: center; gap: 15px;"><i class="fa-solid fa-award" style="color: var(--uci-gold); font-size: 1.2rem;"></i> UC LEADS Scholar — UC Riverside (2018)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER & CONTACT SECTION
+         ========================================== -->
+    <footer id="contact" class="footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h2>Let's Connect</h2>
+                    <p>I am presenting at the 249th ECS Meeting in Seattle and open to discussing research, collaborations, and full-time R&amp;D career opportunities.</p>
+                    <div class="contact-methods">
+                        <a href="mailto:pkpaul@uci.edu" class="contact-item">
+                            <i class="fa-solid fa-envelope"></i> pkpaul@uci.edu
+                        </a>
+                        <a href="https://linkedin.com/in/partho-p-a98728a1" target="_blank" class="contact-item">
+                            <i class="fa-brands fa-linkedin"></i> LinkedIn Profile
+                        </a>
+                        <a href="tel:+19512819240" class="contact-item">
+                            <i class="fa-solid fa-phone"></i> (951) 281-9240
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-cv">
+                    <div class="cv-box">
+                        <i class="fa-regular fa-file-lines cv-icon"></i>
+                        <h3>Curriculum Vitae</h3>
+                        <p>Download my full CV for a comprehensive look at my background.</p>
+                        <a href="Partho_Paul_CV.pdf" download="" class="btn btn-primary cv-btn">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Partho K. Paul. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         VISUAL EDIT MODE UI
+         ========================================== -->
+    <div id="admin-panel" class="admin-panel">
+        <button id="toggle-edit-btn" class="admin-btn"><i class="fa-solid fa-pen-to-square"></i> Enable Edit Mode</button>
+        <button id="save-html-btn" class="admin-btn save-btn" style="display: none;"><i class="fa-solid fa-download"></i> Save Changes</button>
+    </div>
+    
+    <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
+
+    <script src="app.js"></script>
+
+</body>
+</html>
