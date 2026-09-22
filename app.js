@@ -1,88 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- Draggable Scroll for Research Tabs ---
-    const slider = document.getElementById('dragContainer');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+    // --- Draggable tabs + tab switching (Research and Teaching sections) ---
+    document.querySelectorAll('.research-interactive').forEach(box => {
+        const slider = box.querySelector('.drag-container');
+        const tabItems = box.querySelectorAll('.tab-item');
+        const panes = box.querySelectorAll('.research-pane');
+        let isDown = false, isDragging = false, startX, scrollLeft;
 
-    slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.style.cursor = 'grabbing';
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2; // Scroll-fast multiplier
-        slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // Touch support for mobile dragging
-    slider.addEventListener('touchstart', (e) => {
-        isDown = true;
-        startX = e.touches[0].pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('touchend', () => {
-        isDown = false;
-    });
-
-    slider.addEventListener('touchmove', (e) => {
-        if (!isDown) return;
-        const x = e.touches[0].pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2;
-        slider.scrollLeft = scrollLeft - walk;
-    });
-
-
-    // --- Tab Switching Logic ---
-    const tabItems = document.querySelectorAll('.tab-item');
-    const researchPanes = document.querySelectorAll('.research-pane');
-
-    // Prevent click event if dragging
-    let isDragging = false;
-    slider.addEventListener('mousemove', (e) => {
-        if (isDown) {
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true; isDragging = false;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        slider.addEventListener('mouseleave', () => { isDown = false; slider.style.cursor = 'grab'; });
+        slider.addEventListener('mouseup', () => { isDown = false; slider.style.cursor = 'grab'; });
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
             isDragging = true;
-        }
-    });
-    slider.addEventListener('mousedown', () => {
-        isDragging = false;
-    });
+            const x = e.pageX - slider.offsetLeft;
+            slider.scrollLeft = scrollLeft - (x - startX) * 2;
+        });
 
-    tabItems.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            if (isDragging) {
-                e.preventDefault();
-                return;
-            }
+        // Touch support for mobile dragging
+        slider.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        slider.addEventListener('touchend', () => { isDown = false; });
+        slider.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            slider.scrollLeft = scrollLeft - (x - startX) * 2;
+        });
 
-            // Remove active class from all tabs
-            tabItems.forEach(item => item.classList.remove('active'));
-            // Remove active class from all panes
-            researchPanes.forEach(pane => pane.classList.remove('active'));
-
-            // Add active class to clicked tab
-            tab.classList.add('active');
-
-            // Add active class to corresponding pane
-            const targetId = tab.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                if (isDragging) { e.preventDefault(); return; }
+                tabItems.forEach(item => item.classList.remove('active'));
+                panes.forEach(pane => pane.classList.remove('active'));
+                tab.classList.add('active');
+                box.querySelector('#' + tab.getAttribute('data-target')).classList.add('active');
+            });
         });
     });
 
