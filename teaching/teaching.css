@@ -318,3 +318,161 @@ body.rickshaw {
     .rickshaw .t-hero .container { padding-bottom: 40px; }
     .rickshaw .t-section-head h2 { font-size: 30px; }
 }
+
+
+/* ---------- Formula ribbon (rickshaw slogan plaques) ---------- */
+.formula-ribbon {
+    display: flex; overflow: hidden; background: var(--night, #17131d);
+    padding: 22px 0 26px; gap: 16px;
+}
+.rickshaw .formula-ribbon::after { display: none; }
+.formula-track {
+    display: flex; gap: 16px; list-style: none; flex: none; padding: 0; margin: 0;
+    animation: formula-scroll 70s linear infinite;
+}
+.formula-ribbon:hover .formula-track { animation-play-state: paused; }
+@keyframes formula-scroll { to { transform: translateX(calc(-100% - 16px)); } }
+.plaque {
+    --c: #e53935; --fg: #fbf3e2;
+    flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    padding: 10px 20px 12px; border-radius: 14px;
+    background: var(--c); color: var(--fg);
+    border: 2.5px solid #0f0b13;
+    outline: 2px dashed color-mix(in srgb, var(--fg) 55%, transparent); outline-offset: -8px;
+    box-shadow: 4px 4px 0 #0f0b13;
+    white-space: nowrap;
+}
+.plaque-label { font-family: "Shrikhand", Georgia, serif; font-size: 14px; line-height: 1.1; opacity: .92; }
+.plaque-eq { font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+.plaque-eq sub, .plaque-eq sup { font-size: 0.68em; line-height: 0; }
+.plaque-red   { --c: #e53935; --fg: #fbf3e2; }
+.plaque-mari  { --c: #ffb300; --fg: #17131d; }
+.plaque-teal  { --c: #14b8a6; --fg: #17131d; }
+.plaque-pink  { --c: #ff5c93; --fg: #17131d; }
+.plaque-blue  { --c: #2f6fe0; --fg: #fbf3e2; }
+.plaque-green { --c: #43c55a; --fg: #17131d; }
+.plaque:nth-child(odd) { transform: rotate(-1.2deg); }
+.plaque:nth-child(even) { transform: rotate(1deg); }
+@media (prefers-reduced-motion: reduce) {
+    .formula-ribbon { overflow-x: auto; }
+    .formula-track { animation: none; }
+    .formula-track-dup { display: none; }
+}
+@media (max-width: 640px) {
+    .plaque-eq { font-size: 16px; }
+    .formula-ribbon { padding: 18px 0 22px; }
+}
+
+/* ---------- Tool card (VSEPR builder link) ---------- */
+.tool-card {
+    display: grid; gap: 4px; margin: 24px 0 8px; padding: 20px 22px; text-decoration: none;
+    background: var(--night, #17131d); color: var(--cream, #fbf3e2); border-radius: 16px;
+    border: 3px solid #0f0b13; box-shadow: inset 0 0 0 5px var(--night, #17131d), inset 0 0 0 7px var(--r-pink, #ff5c93), 5px 5px 0 var(--r-teal, #14b8a6);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.tool-card:hover { text-decoration: none; transform: translate(-2px, -2px); box-shadow: inset 0 0 0 5px var(--night, #17131d), inset 0 0 0 7px var(--r-pink, #ff5c93), 7px 7px 0 var(--r-teal, #14b8a6); }
+.tool-tag { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--r-teal, #14b8a6); }
+.tool-title { font-family: "Shrikhand", Georgia, serif; font-size: 26px; color: var(--mari, #ffb300); line-height: 1.15; }
+.tool-text { font-size: 15px; color: #d9cfbf; max-width: 560px; }
+.tool-go { font-weight: 700; color: var(--mari, #ffb300); margin-top: 6px; }
+@media (prefers-reduced-motion: reduce) { .tool-card, .tool-card:hover { transition: none; transform: none; } }
+
+/* ribbon: drawn structures + reagents over arrows */
+.plaque-svg { display: block; height: 40px; width: auto; margin-top: 2px; }
+.plaque-eq .over { position: relative; display: inline-block; margin: 0 5px; }
+.plaque-eq .over b { font-weight: 700; }
+.plaque-eq .over small { position: absolute; left: 50%; bottom: 72%; transform: translateX(-50%); font-size: 0.56em; font-weight: 700; line-height: 1; white-space: nowrap; }
+.plaque-eq .over small sup { font-size: 0.8em; }
+.plaque-eq { padding-top: 3px; }
+.formula-track { animation-duration: 95s; }
+
+/* ---------- Student reviews ---------- */
+.reviews { background: var(--night, #17131d); color: var(--cream, #fbf3e2); padding: 88px 0 96px; }
+.reviews-eyebrow { color: var(--r-teal, #14b8a6); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.reviews-title { font-family: "Shrikhand", Georgia, serif; font-weight: 400; color: var(--mari, #ffb300); font-size: clamp(32px, 4vw, 44px); line-height: 1.1; margin: 6px 0 36px; }
+
+.review-feature {
+    position: relative; margin: 0; padding: 40px 44px 32px;
+    background: #c2570c; color: #fdf1e3; border-radius: 22px;
+    border: 3px solid #0f0b13; box-shadow: inset 0 0 0 7px #c2570c, inset 0 0 0 9px rgba(253,241,227,.55), 8px 8px 0 var(--mari, #ffb300);
+}
+.review-mark { position: absolute; top: -6px; left: 22px; font-family: "Shrikhand", Georgia, serif; font-size: 110px; line-height: 1; color: var(--mari, #ffb300); -webkit-text-stroke: 3px #0f0b13; }
+.review-feature blockquote p { font-family: Georgia, "Times New Roman", serif; font-size: clamp(19px, 2.1vw, 24px); line-height: 1.45; max-width: 860px; }
+.review-feature blockquote p + p { margin-top: 14px; }
+.review-highlight { font-weight: 700; }
+.review-feature figcaption { margin-top: 22px; font-size: 14px; letter-spacing: .02em; color: #fde3c8; }
+.review-feature figcaption strong { color: #fff; letter-spacing: .06em; text-transform: uppercase; }
+
+.review-stats { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 44px 0; padding: 0; }
+.stat { --c: #ffb300; background: var(--c); color: #17131d; border: 2.5px solid #0f0b13; border-radius: 16px; padding: 18px 20px; box-shadow: 4px 4px 0 #0f0b13; outline: 2px dashed rgba(23,19,29,.35); outline-offset: -9px; }
+.stat-mari { --c: #ffb300; } .stat-teal { --c: #14b8a6; } .stat-pink { --c: #ff5c93; }
+.stat-num { display: block; font-family: "Shrikhand", Georgia, serif; font-size: 44px; line-height: 1.05; }
+.stat-num small { font-size: .45em; }
+.stat-text { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.35; margin-top: 4px; }
+
+.review-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 0; }
+.review-card { background: var(--night-2, #231c2b); border: 1px solid #3d3346; border-top: 4px solid var(--r-pink, #ff5c93); border-radius: 14px; padding: 20px 20px 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.review-card:nth-child(3n+2) { border-top-color: var(--r-teal, #14b8a6); }
+.review-card:nth-child(3n+3) { border-top-color: var(--mari, #ffb300); }
+.review-card blockquote { font-size: 16px; line-height: 1.5; color: #f3e9d8; }
+.review-card cite { font-style: normal; font-size: 12.5px; font-weight: 600; letter-spacing: .04em; color: #b9ad9d; text-transform: uppercase; }
+.reviews-note { font-size: 12.5px; color: #9d9386; margin-top: 22px; max-width: 720px; }
+.reviews-cta { margin-top: 26px; }
+
+@media (max-width: 900px) {
+    .review-stats, .review-grid { grid-template-columns: 1fr; }
+    .review-stats { gap: 14px; margin: 32px 0; }
+}
+@media (max-width: 640px) {
+    .reviews { padding: 64px 0 72px; }
+    .review-feature { padding: 34px 22px 24px; border-radius: 18px; }
+    .review-mark { font-size: 84px; left: 14px; }
+    .stat-num { font-size: 38px; }
+}
+
+/* ---------- Leave-a-review form ---------- */
+.review-form-card {
+    margin-top: 40px; padding: 28px 30px; border-radius: 18px;
+    background: var(--night-2, #231c2b); border: 1px solid #3d3346;
+    display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 28px;
+    box-shadow: inset 0 4px 0 var(--r-teal, #14b8a6);
+}
+.review-form-intro h3 { font-family: "Shrikhand", Georgia, serif; font-weight: 400; color: var(--mari, #ffb300); font-size: 24px; line-height: 1.15; }
+.review-form-intro p { margin-top: 10px; font-size: 14.5px; color: #cfc4b3; }
+.review-form { display: grid; gap: 14px; }
+.rf-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.rf-field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: #e6dccb; position: relative; }
+.rf-field em { font-style: normal; font-weight: 400; color: #9d9386; }
+.review-form input[type=text], .review-form select, .review-form textarea {
+    font: inherit; font-size: 15px; font-weight: 400; color: var(--cream, #fbf3e2); background: #17131d;
+    border: 1.5px solid #3d3346; border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+.review-form textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+.review-form input:focus, .review-form select:focus, .review-form textarea:focus { outline: none; border-color: var(--mari, #ffb300); }
+.rf-count { position: absolute; right: 10px; bottom: 8px; font-size: 11px; font-weight: 500; color: #7d7482; }
+.rf-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #e6dccb; cursor: pointer; }
+.rf-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: #ffb300; flex: none; }
+.rf-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.rf-copy { font: inherit; font-size: 14px; font-weight: 600; background: none; border: 0; color: var(--mari, #ffb300); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 10px 0; }
+.rf-msg { font-size: 14px; min-height: 1.2em; }
+.rf-msg.ok { color: #7ee08a; } .rf-msg.err { color: #ff8a80; }
+@media (max-width: 900px) {
+    .review-form-card { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 24px 20px; }
+    .rf-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Simplified: three still plaques, centred */
+.formula-ribbon { justify-content: center; }
+.formula-track.formula-static { animation: none; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 16px; }
+.formula-track.formula-static { flex: 1 1 auto; max-width: 100%; }
+@media (max-width: 640px) {
+    .formula-track.formula-static { gap: 14px; }
+    .formula-static .plaque { padding: 8px 14px 10px; }
+    .formula-static .plaque-eq { font-size: 15px; }
+    .formula-static .plaque-svg { height: 32px; }
+}
+
+.plaque-svg-wide { height: 44px; }
+@media (max-width: 640px) { .formula-static .plaque-svg-wide { height: 36px; } }
+.plaque-svg-wide { height: 58px; }
+@media (max-width: 640px) { .formula-static .plaque-svg-wide { height: 48px; } }
