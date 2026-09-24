@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://parthor96.github.io/partho/sitemap.xml

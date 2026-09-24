@@ -1,84 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- Draggable tabs + tab switching (Research and Teaching sections) ---
-    document.querySelectorAll('.research-interactive').forEach(box => {
-        const slider = box.querySelector('.drag-container');
-        const tabItems = box.querySelectorAll('.tab-item');
-        const panes = box.querySelectorAll('.research-pane');
-        let isDown = false, isDragging = false, startX, scrollLeft;
 
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true; isDragging = false;
-            slider.style.cursor = 'grabbing';
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
+    // --- Research topic switcher (ARIA tabs with roving tabindex) ---
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+    const panes = document.querySelectorAll('.research-pane');
+    const select = (tab, focus) => {
+        tabs.forEach(t => {
+            const on = t === tab;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', String(on));
+            t.tabIndex = on ? 0 : -1;
         });
-        slider.addEventListener('mouseleave', () => { isDown = false; slider.style.cursor = 'grab'; });
-        slider.addEventListener('mouseup', () => { isDown = false; slider.style.cursor = 'grab'; });
-        slider.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            isDragging = true;
-            const x = e.pageX - slider.offsetLeft;
-            slider.scrollLeft = scrollLeft - (x - startX) * 2;
-        });
-
-        // Touch support for mobile dragging
-        slider.addEventListener('touchstart', (e) => {
-            isDown = true;
-            startX = e.touches[0].pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        });
-        slider.addEventListener('touchend', () => { isDown = false; });
-        slider.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            const x = e.touches[0].pageX - slider.offsetLeft;
-            slider.scrollLeft = scrollLeft - (x - startX) * 2;
-        });
-
-        tabItems.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                if (isDragging) { e.preventDefault(); return; }
-                tabItems.forEach(item => item.classList.remove('active'));
-                panes.forEach(pane => pane.classList.remove('active'));
-                tab.classList.add('active');
-                box.querySelector('#' + tab.getAttribute('data-target')).classList.add('active');
-            });
+        panes.forEach(p => p.classList.toggle('active', p.id === tab.dataset.target));
+        if (focus) tab.focus();
+        tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    };
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => select(tab, false));
+        tab.addEventListener('keydown', e => {
+            let next = null;
+            if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+            else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+            else if (e.key === 'Home') next = tabs[0];
+            else if (e.key === 'End') next = tabs[tabs.length - 1];
+            if (next) { e.preventDefault(); select(next, true); }
         });
     });
 
-    // --- Navbar Scroll Effect ---
+    // --- Drop the right-edge fade once the tab strip is scrolled to its end ---
+    const wrap = document.querySelector('.segmented-wrap');
+    if (wrap) {
+        const onWrapScroll = () => wrap.classList.toggle('at-end', wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2);
+        wrap.addEventListener('scroll', onWrapScroll, { passive: true });
+        window.addEventListener('resize', onWrapScroll);
+        onWrapScroll();
+    }
+
+    // --- Hairline under the nav once the page scrolls ---
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-            navbar.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-        } else {
-            navbar.style.boxShadow = 'none';
-            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-        }
-    });
+    const onScroll = () => navbar && navbar.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    // --- Smooth Scrolling for Anchor Links ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Update active nav link
-                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-                if (this.classList.contains('nav-link')) {
-                    this.classList.add('active');
-                }
-            }
-        });
-    });
-
+    // --- Highlight the nav link for the section in view ---
+    const links = [...document.querySelectorAll('.nav-link[href^="#"]')];
+    const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    if ('IntersectionObserver' in window && sections.length) {
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        sections.forEach(s => io.observe(s));
+    }
 });

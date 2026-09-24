@@ -15,7 +15,8 @@ Example fields for an existing topic:
   videos: [{ label: 'Problems 1–3 (YouTube)', url: 'https://www.youtube.com/watch?v=YOUR_VIDEO_ID' }]
 Replace example filenames and the video ID with real files/links before adding them.
 Each list can hold several entries. Match labels across columns when adding multiple sets.
-Empty lists display Coming soon without a dead link.
+Topics are listed in course order under their course heading. A topic with no links shows a Text (phone) or Email (desktop) link so students can ask about it; the line under "Practice by topic" counts how many topics have material.
+Each topic keeps its number (its position in the list) and an anchor such as #topic-aromaticity-aromatic-reactions for linking from YouTube descriptions.
 Add, reorder, or remove topic objects as needed. course is I or II.
 Course groupings are starter categories; adjust to your students' syllabus.
 
