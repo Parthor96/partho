@@ -109,6 +109,7 @@
     <a class="logo" href="./">Partho K. Paul</a>
     <nav aria-label="Main">
       <a href="./">Tutoring &amp; practice</a>
+      <a class="hide-sm" href="equilibrium.html">Equilibrium</a>
       <a class="hide-sm" href="../">Research</a>
     </nav>
   </header>
@@ -225,12 +226,15 @@
     const axeHTML = (m, n) => 'AX' + sub(m) + (n ? 'E' + sub(n) : '');
 
     // ---------- 3D ----------
-    let scene, camera, renderer, controls, group, ready = false;
+    // Two renderers share one API (clear / draw). WebGL (three.js) when the browser allows it;
+    // otherwise a plain 2D-canvas renderer that projects the same 3D positions, so the tool works everywhere.
+    let scene, camera, renderer, controls, group, ready = false, flat = null;
     function init3D() {
-      if (!window.THREE) { $('canvas').innerHTML = '<p class="nogl">The 3D viewer could not load. Check your connection and refresh.</p>'; return; }
       const el = $('canvas');
-      try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
-      catch (e) { el.innerHTML = '<p class="nogl">3D needs WebGL, which this browser has turned off.</p>'; return; }
+      let gl = null;
+      if (window.THREE) { try { gl = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { gl = null; } }
+      if (!gl) { flat = makeFlat(el); ready = true; return; }
+      renderer = gl;
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
       camera.position.set(0, 2.2, 10);
@@ -254,7 +258,83 @@
       window.addEventListener('pointerup', () => controls._drag = false);
       ready = true;
     }
-    function clear() { if (!ready) return; while (group.children.length) { const o = group.children.pop(); o.traverse(c => { c.geometry && c.geometry.dispose(); c.material && c.material.dispose(); }); } }
+
+    // ----- 2D-canvas renderer (no WebGL needed) -----
+    function makeFlat(el) {
+      const cv = document.createElement('canvas'); el.appendChild(cv);
+      const ctx = cv.getContext('2d');
+      const hex = n => '#' + n.toString(16).padStart(6, '0');
+      const shade = (n, f) => { let r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255;
+        const t = f > 0 ? 255 : 0, a = Math.abs(f); r += (t - r) * a; g += (t - g) * a; b += (t - b) * a;
+        return `rgb(${r | 0},${g | 0},${b | 0})`; };
+      let items = [], yaw = 0.5, pitch = 0.22, dist = 10, drag = null, W = 1, H = 1, dpr = 1;
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function resize() { dpr = Math.min(window.devicePixelRatio || 1, 2); W = el.clientWidth || 1; H = el.clientHeight || 1; cv.width = W * dpr; cv.height = H * dpr; }
+      new ResizeObserver(resize).observe(el); resize();
+      function rot(p) { // yaw about y, then pitch about x
+        const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+        const x = p[0] * cy + p[2] * sy, z0 = -p[0] * sy + p[2] * cy;
+        const y = p[1] * cp - z0 * sp, z = p[1] * sp + z0 * cp;
+        return [x, y, z];
+      }
+      function proj(p) { const q = rot(p), f = Math.min(W, H) * 1.1 / (dist - q[2]);
+        return { x: W / 2 + q[0] * f, y: H / 2 - q[1] * f, z: q[2], s: f }; }
+      function frame() {
+        requestAnimationFrame(frame);
+        if (!still && !drag) yaw += 0.004;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+        const list = items.map(it => {
+          if (it.t === 'bond') { const L0 = Math.hypot(...it.p) || 1, k0 = (it.r0 || 0) * 0.92 / L0, a = proj(it.p.map(v => v * k0)), b = proj(it.p); return { it, a, b, z: (a.z + b.z) / 2 - 0.3 }; }
+          const c = proj(it.p); return { it, c, z: c.z };
+        }).sort((u, v) => u.z - v.z);
+        ctx.lineCap = 'round';
+        list.forEach(({ it, a, b, c }) => {
+          if (it.t === 'bond') {
+            const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L, w = 0.26 * (a.s + b.s) / 2;
+            (it.dbl ? [-0.22, 0.22] : [0]).forEach(o => {
+              const ox = nx * o * a.s, oy = ny * o * a.s;
+              ctx.strokeStyle = '#0f0b13'; ctx.lineWidth = w + 3; ctx.beginPath(); ctx.moveTo(a.x + ox, a.y + oy); ctx.lineTo(b.x + ox, b.y + oy); ctx.stroke();
+              ctx.strokeStyle = '#e8dcc6'; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(a.x + ox, a.y + oy); ctx.lineTo(b.x + ox, b.y + oy); ctx.stroke();
+            });
+          } else if (it.t === 'atom') {
+            const r = it.r * c.s, g = ctx.createRadialGradient(c.x - r * .35, c.y - r * .4, r * .1, c.x, c.y, r);
+            g.addColorStop(0, shade(it.color, .55)); g.addColorStop(.55, hex(it.color)); g.addColorStop(1, shade(it.color, -.45));
+            ctx.fillStyle = g; ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 7); ctx.fill();
+            ctx.strokeStyle = '#0f0b13'; ctx.lineWidth = 2.5; ctx.stroke();
+          } else if (it.t === 'lp') {
+            const o = proj([0, 0, 0]), d = [c.x - o.x, c.y - o.y], L = Math.hypot(d[0], d[1]) || 1, ang = Math.atan2(d[1], d[0]);
+            const rMin = 0.75 * c.s, rMax = Math.max(rMin, 1.16 * c.s * Math.min(1, L / (1.45 * c.s)));
+            ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(ang);
+            ctx.fillStyle = 'rgba(255,179,0,.55)'; ctx.strokeStyle = 'rgba(255,179,0,.9)'; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.ellipse(0, 0, rMax, rMin, 0, 0, 7); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = '#17131d'; [-1, 1].forEach(k => { ctx.beginPath(); ctx.arc(rMax * .3, k * .22 * c.s, .09 * c.s, 0, 7); ctx.fill(); });
+            ctx.restore();
+          } else if (it.t === 'ghost') {
+            ctx.fillStyle = 'rgba(251,243,226,.35)'; ctx.beginPath(); ctx.arc(c.x, c.y, 0.28 * c.s, 0, 7); ctx.fill();
+          }
+        });
+      }
+      cv.style.touchAction = 'none'; cv.style.cursor = 'grab';
+      const pts = new Map(); let pinch0 = 0, dist0 = dist;
+      cv.addEventListener('pointerdown', e => { cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); drag = [e.clientX, e.clientY];
+        if (pts.size === 2) { const [p, q] = [...pts.values()]; pinch0 = Math.hypot(p[0] - q[0], p[1] - q[1]); dist0 = dist; } });
+      cv.addEventListener('pointermove', e => {
+        if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, [e.clientX, e.clientY]);
+        if (pts.size === 2) { const [p, q] = [...pts.values()], d = Math.hypot(p[0] - q[0], p[1] - q[1]); if (pinch0) dist = Math.max(6, Math.min(18, dist0 * pinch0 / d)); return; }
+        yaw += (e.clientX - drag[0]) * 0.01; pitch = Math.max(-1.4, Math.min(1.4, pitch + (e.clientY - drag[1]) * 0.01)); drag = [e.clientX, e.clientY];
+      });
+      const up = e => { pts.delete(e.pointerId); if (!pts.size) drag = null; pinch0 = 0; };
+      cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+      cv.addEventListener('wheel', e => { e.preventDefault(); dist = Math.max(6, Math.min(18, dist * (1 + e.deltaY * 0.001))); }, { passive: false });
+      frame();
+      return { clear() { items = []; }, add(it) { items.push(it); } };
+    }
+
+    function clear() {
+      if (!ready) return;
+      if (flat) { flat.clear(); return; }
+      while (group.children.length) { const o = group.children.pop(); o.traverse(c => { c.geometry && c.geometry.dispose(); c.material && c.material.dispose(); }); }
+    }
     function atom(sym, pos) {
       const [color, r] = EL[sym] || EL.X;
       const m = new THREE.Mesh(new THREE.SphereGeometry(r, 40, 40), new THREE.MeshPhysicalMaterial({ color, roughness: 0.3, metalness: 0.05, clearcoat: 0.6 }));
@@ -288,16 +368,25 @@
     // draw: center symbol, sn, lp, outer list (symbols for bonded positions), double set, stage
     function draw(center, sn, lp, outer, dbl, stage) {
       if (!ready) return; clear();
-      group.add(atom(center, null));
+      const F = flat, unit = p => { const L = Math.hypot(...p); return p.map(v => v / L); };
+      const put = (sym, p) => { const [color, r] = EL[sym] || EL.X; F.add({ t: 'atom', p, color, r }); };
+      const r0 = (EL[center] || EL.X)[1];
+      if (F) put(center, [0, 0, 0]); else group.add(atom(center, null));
       if (stage === 'center') return;
       const pos = POS[sn], lpIdx = LP_ORDER[sn].slice(0, lp);
-      if (stage === 'domains') { pos.forEach(p => { group.add(ghost(p)); group.add(bond(new THREE.Vector3(...p).multiplyScalar(0.8), false)); }); return; }
+      if (stage === 'domains') {
+        pos.forEach(p => {
+          if (F) { F.add({ t: 'ghost', p }); F.add({ t: 'bond', p: p.map(v => v * 0.8), dbl: false, r0 }); }
+          else { group.add(ghost(p)); group.add(bond(new THREE.Vector3(...p).multiplyScalar(0.8), false)); }
+        });
+        return;
+      }
       let k = 0;
       pos.forEach((p, i) => {
-        if (lpIdx.includes(i)) { group.add(lonePair(p)); return; }
-        const sym = outer[k++] || 'X', v = new THREE.Vector3(...p);
-        const isD = dbl.includes(sym);
-        group.add(bond(v, isD)); group.add(atom(sym, v));
+        if (lpIdx.includes(i)) { if (F) F.add({ t: 'lp', p: unit(p).map(v => v * 1.45) }); else group.add(lonePair(p)); return; }
+        const sym = outer[k++] || 'X', isD = dbl.includes(sym);
+        if (F) { F.add({ t: 'bond', p, dbl: isD, r0 }); put(sym, p); }
+        else { const v = new THREE.Vector3(...p); group.add(bond(v, isD)); group.add(atom(sym, v)); }
       });
     }
     function showResult(sn, lp) {

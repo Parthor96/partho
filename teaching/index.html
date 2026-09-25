@@ -47,6 +47,7 @@
         <li><a href="#resources" class="nav-link">Practice</a></li>
         <li class="nav-hide-sm"><a href="#tutoring" class="nav-link">Tutoring</a></li>
         <li class="nav-hide-sm"><a href="vsepr.html" class="nav-link">VSEPR</a></li>
+        <li class="nav-hide-sm"><a href="equilibrium.html" class="nav-link">Equilibrium</a></li>
         <li class="nav-hide-sm"><a href="#reviews" class="nav-link">Reviews</a></li>
         <li class="only-touch"><a href="sms:+19494782499?&amp;body=Hi%20Partho%2C%20I%27d%20like%20tutoring%20help.%20Course%3A%20.%20Topics%3A%20.%20Times%20that%20work%3A%20." class="nav-link nav-resume">Text Partho</a></li>
         <li class="only-fine"><a href="mailto:pkpaul@uci.edu?subject=Chemistry%20tutoring" class="nav-link nav-resume">Email Partho</a></li>
@@ -147,6 +148,13 @@
           <span class="tool-go">Open the builder ›</span>
         </a>
 
+        <a class="tool-card" href="equilibrium.html">
+          <span class="tool-tag">Interactive</span>
+          <span class="tool-title">Equilibrium Explorer</span>
+          <span class="tool-text">Type any reaction, give K and the starting amounts, and see how much starting material and product are left. Then add a reagent, squeeze the flask, or change K and watch Q chase K. Includes the full ICE table.</span>
+          <span class="tool-go">Open the explorer ›</span>
+        </a>
+
         <div id="resource-groups" hidden></div>
         <p class="progress-note">Other topics: <a class="only-touch" href="sms:+19494782499?&amp;body=Hi%20Partho%2C%20could%20you%20add%20practice%20on%20">text a request ›</a><a class="only-fine" href="mailto:pkpaul@uci.edu?subject=Topic%20request">email a request ›</a></p>
         <noscript><p>Please enable JavaScript to view the topic list. You can still use the tutoring contact links on this page.</p></noscript>
@@ -192,7 +200,7 @@
       <div class="review-form-card" id="leave-review">
         <div class="review-form-intro">
           <h3>Worked with Partho before?</h3>
-          <p>Leave a short review. Tapping <strong>Send review</strong> opens your email app with everything filled in; just press send.</p>
+          <p>Leave a short review. It goes straight to Partho when you tap <strong>Send review</strong>.</p>
         </div>
         <form id="review-form" class="review-form" novalidate>
           <div class="rf-row">
@@ -200,9 +208,8 @@
               <span>Course or subject</span>
               <select name="subject" required>
                 <option value="" disabled selected>Choose one…</option>
-                <option>Chem 51A</option>
-                <option>Chem 51B</option>
-                <option>Chem 51C</option>
+                <option>General chemistry</option>
+                <option>Sophomore organic chemistry</option>
                 <option>Upper-division organic chemistry</option>
                 <option>Free Thursday session</option>
                 <option>Other</option>
@@ -226,9 +233,11 @@
             <input type="checkbox" name="consent">
             <span>Partho may post this review on his website.</span>
           </label>
+          <input type="text" name="_honey" class="rf-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="rf-actions">
             <button type="submit" class="btn btn-primary">Send review</button>
-            <button type="button" class="rf-copy" id="rf-copy" hidden>Email didn’t open? Copy review</button>
+            <a class="rf-copy" id="rf-mail" href="#" hidden>Email it instead</a>
+            <button type="button" class="rf-copy" id="rf-copy" hidden>Copy review</button>
           </div>
           <p class="rf-msg" id="rf-msg" role="status"></p>
         </form>

@@ -476,3 +476,7 @@ body.rickshaw {
 @media (max-width: 640px) { .formula-static .plaque-svg-wide { height: 36px; } }
 .plaque-svg-wide { height: 58px; }
 @media (max-width: 640px) { .formula-static .plaque-svg-wide { height: 48px; } }
+
+.rf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.review-form button[disabled] { opacity: .6; cursor: progress; }
+.tool-card + .tool-card { margin-top: 16px; }
